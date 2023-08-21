@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_app/pos_widget.dart';
-import 'package:flutter_app/udp/udp_test.dart';
 
 import 'cds_widget.dart';
 
@@ -29,7 +25,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -60,7 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Center(
                     child: Text(
                   'Start POS',
-                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ))),
             onTap: () {
               _selectPermission(Permission.POS);
@@ -73,7 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Center(
                     child: Text(
                   'Start CDS',
-                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ))),
             onTap: () {
               _selectPermission(Permission.CDS);

@@ -13,10 +13,10 @@ class UDPTest {
   Map<String, dynamic> senderEvents = {};
   Map<String, dynamic> receiveEvents = {};
 
-  UDPSocket cdsSocket;
-  String ip; // server ip
-  int port; // server port
-  int myPort; // my port
+  UDPSocket? cdsSocket;
+  late String ip; // server ip
+  late int port; // server port
+  late int myPort; // my port
 
   /// add sender event
   void addSenderEventListener(String eventName, Function callback) {
@@ -55,14 +55,14 @@ class UDPTest {
 
     if (cdsSocket != null) {
       final str = ascii.encode(ms);
-      cdsSocket.send(str, ip, port);
+      cdsSocket!.send(str, ip, port);
 
       if (senderEvents.containsKey(SENDER))
         for (var f in senderEvents[SENDER]) {
           f(ascii.decode(str));
         }
 
-      final datagram = await cdsSocket.receive();
+      final datagram = await cdsSocket!.receive();
       if (receiveEvents.containsKey(RESPONSE))
         for (var f in receiveEvents[RESPONSE]) {
           f(datagram);
@@ -85,14 +85,14 @@ class UDPTest {
   /// IOS not close socket
   close() {
     if (Platform.isAndroid) {
-      cdsSocket.close();
+      cdsSocket?.close();
     }
   }
 
   bindMulticastServer(String ip, int port) async {
     final socketServer = await UDPSocket.bindMulticast(ip, 7777);
     while (true) {
-      final datagram = await socketServer.receive();
+      final datagram = await socketServer!.receive();
       if (receiveEvents.containsKey(RESPONSE))
         for (var f in receiveEvents[RESPONSE]) {
           f(datagram);

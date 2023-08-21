@@ -32,7 +32,7 @@ class UDPSocket {
     return UDPSocket(socket);
   }
 
-  static Future<UDPSocket> bindMulticast(String ip, int port, [bool reusePort = false]) async {
+  static Future<UDPSocket?> bindMulticast(String ip, int port, [bool reusePort = false]) async {
     RawDatagramSocket socket =
     await RawDatagramSocket.bind(InternetAddress.anyIPv4, port, reusePort: reusePort);
     try {
@@ -47,7 +47,7 @@ class UDPSocket {
   }
 
 
-  static Future<UDPSocket> bindBroadcast(int port, [bool reusePort = false]) async {
+  static Future<UDPSocket?> bindBroadcast(int port, [bool reusePort = false]) async {
     RawDatagramSocket socket =
     await RawDatagramSocket.bind(InternetAddress.anyIPv4, port, reusePort: reusePort);
     try {
@@ -60,7 +60,7 @@ class UDPSocket {
   }
 
   /// receive a Datagram from the socket.
-  Future<Datagram> receive({int timeout, bool explode = false}) {
+  Future<Datagram> receive({int? timeout, bool explode = false}) {
     final completer = Completer<Datagram>.sync();
     if (timeout != null) {
       Future.delayed(Duration(milliseconds: timeout)).then((_) {
@@ -68,7 +68,7 @@ class UDPSocket {
           if (explode) {
             completer.completeError('EasyUDP: Receive Timeout');
           } else {
-            completer.complete(null);
+            // completer.complete(null);
           }
         }
       });
@@ -79,7 +79,7 @@ class UDPSocket {
           final event = await _eventQueue.peek;
           if (event == RawSocketEvent.closed) {
             if (completer.isCompleted) return;
-            completer.complete(null);
+            // completer.complete(null);
             break;
           } else if (event == RawSocketEvent.read) {
             await _eventQueue.next;

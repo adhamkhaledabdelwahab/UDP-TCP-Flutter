@@ -59,7 +59,7 @@ class _CDSWidgetState extends State<CDSWidget> {
             SizedBox(
               width: 8.0,
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 _udpTest.send(_messageController.text);
               },
@@ -79,12 +79,14 @@ class _CDSWidgetState extends State<CDSWidget> {
                 hintText: 'My Port',
               ),
               keyboardType: TextInputType.number,
-              inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
             )),
             SizedBox(
               width: 8.0,
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 connectPOS(int.parse(_myPortController.text.toString()));
               },
